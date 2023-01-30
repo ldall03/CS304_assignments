@@ -145,25 +145,24 @@ int main()
     insertion_sort(LT);
     // Stop clock
     auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+    std::cout << "Time for LargeType: " << duration.count() << " ms\n";
 
     // Start clock
     auto start_raw = std::chrono::high_resolution_clock::now();
     insertion_sort(LTR);
     // Stop clock
     auto stop_raw = std::chrono::high_resolution_clock::now();
-    auto duration_raw = std::chrono::duration_cast<std::chrono::microseconds>(stop_raw - start_raw);
+    auto duration_raw = std::chrono::duration_cast<std::chrono::milliseconds>(stop_raw - start_raw);
+    std::cout << "Time for LargeTypeRaw: " << duration_raw.count() << " ms\n";
 
     // Make sure lists are sorted
     for (int i = 1; i < SIZE; i++) {
         if (LT[i - 1].get_size() <= LT[i].get_size() && LTR[i - 1].get_size() <= LTR[i].get_size())
             continue;
 
-        throw std::exception("List not sorted.");
+        throw;
     }
-
-    std::cout << "Time for LargeType: " << duration.count() << " microseconds\n";
-    std::cout << "Time for LargeTypeRaw: " << duration_raw.count() << " microseconds\n";
 
     return 0;
 }
