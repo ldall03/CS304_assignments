@@ -10,6 +10,9 @@
    time for size of 50000 for LargeypeRaw: 4905ms
 
    those results are compiled with the visual studio compiler.
+   however when compiling with g++ on linux:
+   time for size of 50000 for LargeType: 66695ms
+   time for size of 50000 for LargeTypeRaw: 6967ms
 */
 
 template <typename T>
