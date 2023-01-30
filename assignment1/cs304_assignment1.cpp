@@ -4,6 +4,14 @@
 #include <ctime>
 #include <stdexcept>
 
+/*
+   Loic Dallaire
+   time for size of 50000 for LargeType: 1963ms
+   time for size of 50000 for LargeypeRaw: 4905ms
+
+   those results are compiled with the visual studio compiler.
+*/
+
 template <typename T>
 class LargeType {
 
@@ -29,14 +37,11 @@ public:
     // Default Constructor
     explicit LargeTypeRaw(int size = 10) 
         : size{ size }, arr{ new T[size] }
-    {
-        // std::cout << "Normal constructor called.\n";
-    }
+    {}
 
     // Destructor
     ~LargeTypeRaw() {
         delete[] this->arr;
-        // std::cout << "Destructor called.\n";
     }
 
     // Copy constructor
@@ -44,7 +49,6 @@ public:
         : size{ other.size }, arr{ new T[size] }
     {
         std::copy(other.arr, other.arr + this->size, this->arr);
-        // std::cout << "Copy constructor called.\n";
     }
 
     // Move constructor
@@ -52,12 +56,10 @@ public:
         : size{ other.size }, arr{ other.arr }
     {
         other.arr = nullptr;
-        // std::cout << "Move constructor called.\n";
     }
 
     // Copy assignment operator
     LargeTypeRaw& operator=(const LargeTypeRaw& other) {
-        // std::cout << "Copy assignment operator called.\n";
 
         if (&other != this) {
             delete[] this->arr;
@@ -71,7 +73,6 @@ public:
 
     // Move assignment operator
     LargeTypeRaw& operator=(LargeTypeRaw&& other) noexcept {
-        // std::cout << "Move cassignment operator called.\n";
 
         if (&other != this) {
             delete[] this->arr;
@@ -146,7 +147,6 @@ int main()
     // Stop clock
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    std::cout << "Time for LargeType: " << duration.count() << " ms\n";
 
     // Start clock
     auto start_raw = std::chrono::high_resolution_clock::now();
@@ -154,7 +154,6 @@ int main()
     // Stop clock
     auto stop_raw = std::chrono::high_resolution_clock::now();
     auto duration_raw = std::chrono::duration_cast<std::chrono::milliseconds>(stop_raw - start_raw);
-    std::cout << "Time for LargeTypeRaw: " << duration_raw.count() << " ms\n";
 
     // Make sure lists are sorted
     for (int i = 1; i < SIZE; i++) {
@@ -163,6 +162,9 @@ int main()
 
         throw;
     }
+
+    std::cout << "Time for LargeType: " << duration.count() << " milliseconds\n";
+    std::cout << "Time for LargeTypeRaw: " << duration_raw.count() << " millseconds\n";
 
     return 0;
 }
